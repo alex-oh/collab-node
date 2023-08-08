@@ -1,0 +1,17 @@
+{
+  "name": "collab-node",
+  "version": "1.0.0",
+  "description": "Node.js HTTP web server for Collab application",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "Node",
+    "REST",
+    "Server",
+    "HTTP"
+  ],
+  "author": "Alex Oh, Tom Kruger, Frank Li",
+  "license": "ISC"
+}
