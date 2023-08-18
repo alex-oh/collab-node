@@ -1,4 +1,6 @@
-
+import mongoose from "mongoose";
+const CONNECTION_STRING = "TBD";
+// mongoose.connect(CONNECTION_STRING);
 
 import express from "express"; //import express library
 import cors from "cors"; //import cors library
@@ -7,6 +9,8 @@ import UserController from "./users/users-controller.js";
 
 const app = express(); //create an express library
 app.use(cors()); //use cors library
+
 HelloController(app); //call the HelloController function and pass in the app object
 UserController(app); //call the UserController function and pass in the app object
-app.listen(4001);
+
+app.listen(4000);
