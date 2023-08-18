@@ -1,5 +1,6 @@
-const express = require('express')
-const app = express()
-app.get('/hello', (req, res) => {res.send('Hello World!')})
-app.listen(4000)
-
+import express from "express"; //import express library
+const app = express(); //create an express library
+app.get("/", (req, res) => {
+  res.send("Hello World! o");
+});
+app.listen(4001);
