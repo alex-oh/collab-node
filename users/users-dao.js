@@ -6,6 +6,10 @@ export const findUserById = (uid) => {
   return usersModel.findById(uid);
 };
 
+export const findUsersByIds = (uids) => {
+  return usersModel.find({ _id: { $in: uids } });
+};
+
 export const findUserByUsername = (usernameToCheck) => {
   return usersModel.findOne({username: usernameToCheck});
 };
@@ -33,3 +37,4 @@ export const deleteUser = (uid) => {
   usersModel.deleteOne({ _id: uid });
   return { status: 'ok' }
 };
+
