@@ -10,6 +10,12 @@ const apisSchema = new mongoose.Schema({
 
     description: {type: String, required: false},
 
+    cors: {type: String, required: false},
+
+    auth: {type: String, required: false},
+
+    https: {type: String, required: false},
+
     userFavorites: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Users',
