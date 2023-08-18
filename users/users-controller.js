@@ -5,6 +5,16 @@ const UserController = (app) => {
   app.get('/api/users', findAllUsers);
 };
 
+// const getMultipleUsersById = async (req, res) => {
+//     try {
+//         const users = await userDao.getMultipleUsersById(req.body.userIds);
+//         res.status(200).json(users);
+//     } catch (error) {
+//         console.error("Error fetching users:", error);
+//         res.status(500).json({ error: error.message });
+//     }
+//     };
+
 const createUser = async (req, res) => {
   try {
     const newUser = await userDao.createUser(req.body);
