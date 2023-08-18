@@ -21,7 +21,7 @@ const projectsSchema = new mongoose.Schema({
 
     projectOwner: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'User',  // Assuming your user model is named 'User'
+        ref: 'Users',  // Assuming your user model is named 'User'
         required: true
     },
 
