@@ -13,5 +13,8 @@
     "HTTP"
   ],
   "author": "Alex Oh, Tom Kruger, Frank Li",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
 }
