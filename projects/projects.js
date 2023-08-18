@@ -1,3 +1,5 @@
+// DELETE BEFORE FINAL SUBMISSION
+
 export default [
     {
         "title": "Project 1",

@@ -1,16 +1,24 @@
 import mongoose from "mongoose";
-const CONNECTION_STRING = "TBD";
-// mongoose.connect(CONNECTION_STRING);
+import express from "express";
+import cors from "cors";
+import session from "express-session";
+import UserController from "./users/users-controller.js"
 
-import express from "express"; //import express library
-import cors from "cors"; //import cors library
-import HelloController from "./controllers/hello-controller.js";
-import UserController from "./users/users-controller.js";
+const CONNECTION_STRING = "mongodb+srv://krugert:ZIFQQxbMj7zC7Pmp@neu-collab-0.1oel9h6.mongodb.net/";
 
-const app = express(); //create an express library
-app.use(cors()); //use cors library
+mongoose.connect(CONNECTION_STRING);
 
-HelloController(app); //call the HelloController function and pass in the app object
-UserController(app); //call the UserController function and pass in the app object
 
-app.listen(4000);
+const app = express();
+
+app.use(
+    cors()
+);
+
+app.use(express.json());
+
+UserController(app);
+
+app.listen(4000, () => {
+    console.log("Server is running on port 4000");
+});

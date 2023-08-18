@@ -1,24 +1,28 @@
-import people from "./users.js";
-let users = people;
+import * as userDao from "./users-dao.js";
+
 const UserController = (app) => {
-  app.get("/api/users", findUsers);
-  app.get("/api/users/:uid", findUserById);
+  app.post('/api/users', createUser);
+  app.get('/api/users', findAllUsers);
 };
 
-const findUsers = async (req, res) => {
-  const type = req.query.type;
-  if (type) {
-    const usersOfType = users.filter((u) => u.type === type);
-    res.json(usersOfType);
-    return;
+const createUser = async (req, res) => {
+  try {
+    const newUser = await userDao.createUser(req.body);
+    res.status(201).json(newUser); // Set status to 201 (Created)
+  } catch (error) {
+    console.error("Error creating user:", error); // Log the error for debugging
+    res.status(500).json({ error: error.message }); // Send a 500 Internal Server Error with the error message
   }
-  res.json(users);
 };
 
-const findUserById = async (req, res) => {
-  const userId = req.params.uid;
-  const user = users.find((u) => u._id === userId);
-  res.json(user);
+const findAllUsers = async (req, res) => {
+  try {
+    const users = await userDao.findAllUsers();  // Assuming you have this method in userDao
+    res.status(200).json(users); // Send a 200 OK status with the list of users
+  } catch (error) {
+    console.error("Error fetching users:", error); // Log the error for debugging
+    res.status(500).json({ error: error.message }); // Send a 500 Internal Server Error with the error message
+  }
 };
 
 export default UserController;

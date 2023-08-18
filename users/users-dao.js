@@ -1,18 +1,35 @@
-import userModel from "./users-model";
+import usersModel from "./users-model.js";
 
-export const findAllUsers = () => userModel.find();
+export const findAllUsers = () => usersModel.find();
 
-export const findUserById = () => userModel.findById(uid);
+export const findUserById = (uid) => {
+  return usersModel.findById(uid);
+};
+
+export const findUserByUsername = (usernameToCheck) => {
+  return usersModel.findOne({username: usernameToCheck});
+};
+
+export const findUserByCredentials = (usernameToCheck, passwordToCheck) => {
+  return usersModel.findOne({ username: usernameToCheck, password: passwordToCheck })
+};
 
 export const createUser = (user) => {
-  return userModel.create(user);
+  console.log("Testing Create User");
+  console.log(user);
+  return usersModel.create(user);
 };
 
 export const updateUser = async (uid, user) => {
-  usersModel.updateOne({ _id: uid }, { $set: user });
+  try {
+      const result = await usersModel.updateOne({ _id: uid }, { $set: user });
+      return user;
+  } catch (e) {
+      console.log("ERROR UPDATING USER:", e);
+  }
 };
 
-export const createProject = (project) => {
-    return projectModel.create(project);
-    
-}
+export const deleteUser = (uid) => {
+  usersModel.deleteOne({ _id: uid });
+  return { status: 'ok' }
+};
