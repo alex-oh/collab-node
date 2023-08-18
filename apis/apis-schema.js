@@ -16,8 +16,6 @@ const apisSchema = new mongoose.Schema({
         required: false
     }],
 
-
-
 }, {collection: "Apis"});
 
 export default apisSchema;
