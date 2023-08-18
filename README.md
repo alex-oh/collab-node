@@ -5,3 +5,5 @@ Note:
 On macOS you might need to run the command as a super user as follows. Type your password when prompted.
 $ sudo npm install nodemon -g
 Now instead of using the node command to start the server, use nodemon as follows:
+
+2.no git ignore any file yet

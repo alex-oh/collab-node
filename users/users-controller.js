@@ -5,7 +5,7 @@ const UserController = (app) => {
   app.get("/api/users/:uid", findUserById);
 };
 
-const findUsers = (req, res) => {
+const findUsers = async (req, res) => {
   const type = req.query.type;
   if (type) {
     const usersOfType = users.filter((u) => u.type === type);
@@ -15,7 +15,7 @@ const findUsers = (req, res) => {
   res.json(users);
 };
 
-const findUserById = (req, res) => {
+const findUserById = async (req, res) => {
   const userId = req.params.uid;
   const user = users.find((u) => u._id === userId);
   res.json(user);
