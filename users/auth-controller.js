@@ -23,7 +23,7 @@ const registerUser = async (req, res) => {
     
     const newUser = {
       username,
-      password: hashedPassword,
+      password,
       email,
       accountType: "user" 
     };
