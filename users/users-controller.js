@@ -71,3 +71,4 @@ const getMultipleUsersByID = async (req, res) => {
 
 
 export default UsersController;
+
