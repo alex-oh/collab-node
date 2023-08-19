@@ -3,6 +3,7 @@ import * as userDao from "./users-dao.js";
 const UsersController = (app) => {
   app.post('/api/users', createUser);
   app.get('/api/users', findAllUsers);
+  app.get('/api/users/:uid', getUserById);
   app.post('/api/users/multiple', getMultipleUsersByID);
   app.delete('/api/users/delete/:username', deleteUser);
   app.put('/api/users/:uid', updateUser);
@@ -40,6 +41,17 @@ const findAllUsers = async (req, res) => {
     console.error("Error fetching users:", error);
     res.status(500).json({ error: error.message });
   }
+};
+
+const getUserById = async (req, res) => {
+    try {
+        const userId = req.params.uid;
+        const user = await userDao.findUserById(userId);
+        res.status(200).json(user);
+    } catch (error) {
+        console.error("Error fetching user by ID", error);
+        res.status(500).json({error: error.message});
+    }
 };
 
 const getMultipleUsersByID = async (req, res) => {
