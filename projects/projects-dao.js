@@ -1,4 +1,4 @@
-import projectsModel from "./projects-model";
+import projectsModel from "./projects-model.js";
 
 export const findAll = () => {
     return projectsModel.find();
@@ -28,4 +28,3 @@ export const deleteById = async (id) => {
     return {status: 'ok'};
 }
 
-export default ProjectsDAO;
