@@ -6,8 +6,12 @@ export const findApiByID = (aid) => {
     return apisModel.findById(aid);
 }
 
-export const findApisByIDs = (aid) => {
-    return apisModel.findById({ _id: { $in: aid } })
+export const findApisByIDs = async (apiIds) => {
+    try {
+        return await apisModel.find({ _id: { $in: apiIds } });
+    } catch (e) {
+        console.error("Error fetching multiple APIs by IDs:", e);
+    }
 }
 
 export const createApi = (api) => {
