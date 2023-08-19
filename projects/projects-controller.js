@@ -1,6 +1,15 @@
 import * as ProjectsDAO from "./projects-dao.js";
 
-export const createProject = async (req, res) => {
+const ProjectsController = (app) => {
+    app.post('/api/projects', createProject);
+    app.get('/api/projects', projectsFeed);
+    app.get('/api/projects/courseId', coursesFeed);
+    app.get('/api/projects/projectId', myProjects);
+    app.put('/api/projects/projectId', updateProject);
+    app.delete('/api/projects/projectId', deleteProject);
+};
+
+ const createProject = async (req, res) => {
     try {
         const project = await create(req.body);
         res.status(201).json(project);
@@ -9,7 +18,7 @@ export const createProject = async (req, res) => {
     }
 };
 
-export const projectsFeed = async (req, res) => {
+ const projectsFeed = async (req, res) => {
     try {
         const projects = await findAll();
         res.json(projects);
@@ -18,9 +27,17 @@ export const projectsFeed = async (req, res) => {
     }
 };
 
-export const findProject = projectsFeed; 
+ const findProject = async (req, res) => {
+    try {
+        const projectId = req.params.projectId;
+        const project = await findById(projectId);
+        res.json(project);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+} 
 
-export const coursesFeed = async (req, res) => {
+ const coursesFeed = async (req, res) => {
     try {
         const courseId = req.params.courseId;
         const projects = await findOwnerId(courseId);
@@ -30,9 +47,17 @@ export const coursesFeed = async (req, res) => {
     }
 };
 
-export const findCourseProject = coursesFeed; 
+ const findCourseProject = async (req, res) => {
+    try {
+        const courseId = req.params.courseId;
+        const project = await findOwnerId(courseId);
+        res.json(project);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+}
 
-export const myProjects = async (req, res) => {
+ const myProjects = async (req, res) => {
     try {
         const projectId = req.params.projectId;
         const project = await findById(projectId);
@@ -42,9 +67,17 @@ export const myProjects = async (req, res) => {
     }
 };
 
-export const findProjectById = myProjects; // find for my projects
+ const findProjectById = async (req, res) => {
+    try {
+        const projectId = req.params.projectId;
+        const project = await findById(projectId);
+        res.json(project);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+}
 
-export const updateProject = async (req, res) => {
+const updateProject = async (req, res) => {
     try {
         const projectId = req.params.projectId;
         const updatedProject = req.body;
@@ -55,7 +88,7 @@ export const updateProject = async (req, res) => {
     }
 };
 
-export const deleteProject = async (req, res) => {
+ const deleteProject = async (req, res) => {
     try {
         const projectId = req.params.projectId;
         const result = await deleteById(projectId);
