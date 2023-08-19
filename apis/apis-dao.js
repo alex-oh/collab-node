@@ -1,4 +1,4 @@
-import apisModel from "./apis-model";
+import apisModel from "./apis-model.js";
 
 export const findAllApis = () => apisModel.find();
 
@@ -15,7 +15,7 @@ export const createApi = (api) => {
 }
 
 export const updateApi = async (aid, api) => {
-    
+
     try {
         const result = await apisModel.updateOne({ _id: aid }, { $set: api }, { new: true });
 

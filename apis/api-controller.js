@@ -37,7 +37,7 @@ const getApiByID = async (req, res) => {
 
     try {
         const apiId = req.params.aid;
-        const api = await apisDao.findApiById(apiId);
+        const api = await apisDao.findApiByID(apiId);
         
         if (!api) {
             return res.status(404).json({ error: 'API not found' });
@@ -88,3 +88,4 @@ const updateApi = async (req, res) => {
 };
 
 
+export default ApiController;
