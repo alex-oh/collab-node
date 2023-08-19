@@ -27,4 +27,3 @@ export const deleteById = async (id) => {
     projectsModel.deleteOne({_id});
     return {status: 'ok'};
 }
-

@@ -1,22 +1,31 @@
-import * as ProjectsDAO from "./projects-dao.js";
+import * as projectsDao from "./projects-dao.js";
 
 const ProjectsController = (app) => {
-  app.post("/api/projects", createProject);
-  app.get("/api/projects/projectId", findProject);
-  app.get("/api/projects/courseId", findCourseProject);
-
-  app.get("/api/projects/projectId", myProjects);
-  app.put("/api/projects/projectId", updateProject);
-  app.delete("/api/projects/projectId", deleteProject);
+    app.post('/api/projects', createProject);
+    app.get('/api/projects', getProjects);
+    app.get('/api/projects/courseId', coursesFeed);
+    app.get('/api/projects/projectId', myProjects);
+    app.put('/api/projects/projectId', updateProject);
+    app.delete('/api/projects/projectId', deleteProject);
 };
 
-const createProject = async (req, res) => {
-  try {
-    const project = await ProjectsDAO.create(req.body);
-    res.status(201).json(project);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
+ const createProject = async (req, res) => {
+    try {
+        const project = await projectsDao.create(req.body);
+        res.status(201).json(project);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+};
+
+ const getProjects = async (req, res) => {
+    try {
+        const projects = await projectsDao.findAll();
+        console.log(projects);
+        res.json(projects);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
 };
 
 const findProject = async (req, res) => {
