@@ -1,6 +1,6 @@
 import * as userDao from "./users-dao.js";
 
-const UserController = (app) => {
+const UsersController = (app) => {
   app.post('/api/users', createUser);
   app.get('/api/users', findAllUsers);
   app.post('/api/users/multiple', getMultipleUsersByID);
@@ -41,4 +41,4 @@ const getMultipleUsersByID = async (req, res) => {
   }
 };
 
-export default UserController;
+export default UsersController;

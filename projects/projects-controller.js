@@ -1,8 +1,8 @@
-import * as ProjectsDAO from "./projects-dao.js";
+import * as projectsDao from "./projects-dao.js";
 
 const ProjectsController = (app) => {
     app.post('/api/projects', createProject);
-    app.get('/api/projects', projectsFeed);
+    app.get('/api/projects', getProjects);
     app.get('/api/projects/courseId', coursesFeed);
     app.get('/api/projects/projectId', myProjects);
     app.put('/api/projects/projectId', updateProject);
@@ -11,16 +11,17 @@ const ProjectsController = (app) => {
 
  const createProject = async (req, res) => {
     try {
-        const project = await create(req.body);
+        const project = await projectsDao.create(req.body);
         res.status(201).json(project);
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
 };
 
- const projectsFeed = async (req, res) => {
+ const getProjects = async (req, res) => {
     try {
-        const projects = await findAll();
+        const projects = await projectsDao.findAll();
+        console.log(projects);
         res.json(projects);
     } catch (error) {
         res.status(500).json({ error: error.message });
@@ -97,3 +98,5 @@ const updateProject = async (req, res) => {
         res.status(500).json({ error: error.message });
     }
 };
+
+export default ProjectsController;
