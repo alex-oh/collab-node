@@ -1,5 +1,7 @@
 import express from "express";
 import * as userDao from "./users-dao.js";
+import bcrypt from "bcryptjs";
+import usersModel from "./users-model.js";
 
 const AuthController = (app) => {
   app.post('/api/users/register', registerUser);
@@ -41,22 +43,28 @@ const loginUser = async (req, res) => {
     // Find the user by username
     const user = await userDao.findUserByUsername(username);
     if (!user) {
-      return res.status(401).json({ error: "Invalid username or password" });
+      return res.status(401).json({ error: "Invalid username " });
     }
     
     // Compare passwords
-    const passwordMatch = await bcrypt.compare(password, user.password);
+    const passwordMatch = await usersModel.findOne({ username: username, password: password });
     if (!passwordMatch) {
-      return res.status(401).json({ error: "Invalid username or password" });
+      return res.status(401).json({ error: "Invalid password" });
+    }
+    console.log("User:", user);
+
+    // Store user information in session
+    // req.session.user = user;
+    if(user && passwordMatch){
+        req.session.user = user;
+
+        res.status(200).json({ message: "Login successful", user });
+
     }
     
-    // Store user information in session
-    req.session.user = user;
-    
-    res.status(200).json({ message: "Login successful", user });
   } catch (error) {
     console.error("Error logging in:", error);
-    res.status(500).json({ error: "Internal Server Error" });
+    res.status(500).json({ error: "InternaServerl  Error" });
   }
 };
 

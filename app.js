@@ -17,7 +17,11 @@ const app = express();
 app.use(
     cors()
 );
-
+app.use(session({
+    secret: "your-secret-key", // Replace with your own secret key
+    resave: false,
+    saveUninitialized: true
+  }));
 app.use(express.json());
 
 UsersController(app);

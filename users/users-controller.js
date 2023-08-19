@@ -4,7 +4,7 @@ const UsersController = (app) => {
   app.post('/api/users', createUser);
   app.get('/api/users', findAllUsers);
   app.post('/api/users/multiple', getMultipleUsersByID);
-  app.delete('/api/users/:uid', deleteUser);
+  app.delete('/api/users/delete/:username', deleteUser);
   app.put('/api/users/:uid', updateUser);
 };
 
@@ -26,7 +26,7 @@ const updateUser = async (req, res) => {
 };
 
 const deleteUser = async (req, res) => {
-    const uid = req.params.uid;
+    const uid = req.params.username;
     const status = await userDao.deleteUser(uid);
     res.json(status);
 };
