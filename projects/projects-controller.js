@@ -3,8 +3,6 @@ import * as projectsDao from "./projects-dao.js";
 const ProjectsController = (app) => {
     app.post('/api/projects', createProject);
     app.get('/api/projects', getProjects);
-    app.get('/api/projects/courseId', coursesFeed);
-    app.get('/api/projects/projectId', myProjects);
     app.put('/api/projects/projectId', updateProject);
     app.delete('/api/projects/projectId', deleteProject);
 };
