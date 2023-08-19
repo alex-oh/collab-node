@@ -3,13 +3,14 @@ import * as apisDao from "./apis-dao.js";
 const ApiController = (app) => {
     app.post('/api/apis', createApi);
     app.get('/api/apis', findAllApis);
+    app.get('/api/apis:aid', getApiByID);
     app.post('/api/apis/multiple', getMultipleApisByID);
     app.put('/api/apis/:aid', updateApi);
 };
 
 
 const createApi = async (req, res) => {
-    
+
     try {
         const newApi = await apisDao.createUser(req.body);
         res.status(201).json(newUser);
@@ -31,6 +32,25 @@ const findAllApis = async (req, res) => {
 
 
 }
+
+const getApiByID = async (req, res) => {
+
+    try {
+        const apiId = req.params.aid;
+        const api = await apisDao.findApiById(apiId);
+        
+        if (!api) {
+            return res.status(404).json({ error: 'API not found' });
+        }
+
+        res.status(200).json(api);
+    } catch (error) {
+        console.error("Error fetching API by ID:", error);
+        res.status(500).json({ error: error.message });
+    }
+
+};
+
 
 const getMultipleApisByID = async (req, res) => {
 
