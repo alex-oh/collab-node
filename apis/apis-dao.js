@@ -15,11 +15,18 @@ export const createApi = (api) => {
 }
 
 export const updateApi = async (aid, api) => {
+    
     try {
-        const result = await apisModel.updateOne({_id: aid}, {$set: api});
-        return api;
+        const result = await apisModel.updateOne({ _id: aid }, { $set: api }, { new: true });
+
+        if (result.nModified === 0) {
+            return null; 
+        }
+
+        return result; 
 
     } catch (e) {
         console.log("ERROR HANDLING THE API UPDATE:", e);
+        throw e; 
     }
 }
