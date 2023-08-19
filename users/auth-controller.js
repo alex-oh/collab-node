@@ -2,9 +2,11 @@ import express from "express";
 import * as userDao from "./users-dao.js";
 
 const AuthController = (app) => {
-  app.post('/api/register', registerUser);
-  app.post('/api/login', loginUser);
-  app.post('/api/logout', logoutUser);
+  app.post('/api/users/register', registerUser);
+  app.post('/api/users/login', loginUser);
+  app.post('/api/users/logout', logoutUser);
+  app.post('/api/users/profile', profile);
+  app.put('/api/users', update);
 };
 
 const registerUser = async (req, res) => {
@@ -63,5 +65,24 @@ const logoutUser = (req, res) => {
   req.session.destroy();
   res.status(200).json({ message: "Logout successful" });
 };
+
+const profile = async (req, res) => {
+    try {
+        const user = req.session.user;
+        if (!user) {
+        return res.status(401).json({ error: "Not logged in" });
+        }
+        
+        res.status(200).json({ message: "Profile retrieved successfully", user });
+    } catch (error) {
+        console.error("Error getting profile:", error);
+        res.status(500).json({ error: "Internal Server Error" });
+    }
+    }
+
+const update = async (req, res) => {
+    userDao.updateUser(req.body);
+    res.status(200).json({ message: "Update successful" });
+}
     
 export default AuthController;

@@ -5,6 +5,7 @@ import session from "express-session";
 import UsersController from "./users/users-controller.js";
 import ApisController from "./apis/apis-controller.js";
 import ProjectsController from "./projects/projects-controller.js"
+import AuthController from "./users/auth-controller.js";
 
 const CONNECTION_STRING = "mongodb+srv://krugert:ZIFQQxbMj7zC7Pmp@neu-collab-0.1oel9h6.mongodb.net/";
 
@@ -22,6 +23,7 @@ app.use(express.json());
 UsersController(app);
 ProjectsController(app);
 ApisController(app);
+AuthController(app);
 
 
 app.listen(4000, () => {
