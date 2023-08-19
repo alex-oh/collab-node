@@ -3,7 +3,7 @@ import * as apisDao from "./apis-dao.js";
 const ApiController = (app) => {
     app.post('/api/apis', createApi);
     app.get('/api/apis', findAllApis);
-    app.get('/api/apis:aid', getApiByID);
+    app.get('/api/apis/:aid', getApiByID);
     app.post('/api/apis/multiple', getMultipleApisByID);
     app.put('/api/apis/:aid', updateApi);
 };
@@ -12,8 +12,8 @@ const ApiController = (app) => {
 const createApi = async (req, res) => {
 
     try {
-        const newApi = await apisDao.createUser(req.body);
-        res.status(201).json(newUser);
+        const newApi = await apisDao.createApi(req.body);
+        res.status(201).json(newApi);
     } catch (error) {
         console.error("Error creating API:", error);
         res.status(500).json({ error: error.message });
@@ -26,7 +26,7 @@ const findAllApis = async (req, res) => {
         const apis = await apisDao.findAllApis();
         res.status(200).json(apis);
     } catch (error) {
-        console.error("Error fetching users:", error);
+        console.error("Error fetching APIs:", error);
         res.status(500).json({ error: error.message });
     }
 
@@ -61,7 +61,7 @@ const getMultipleApisByID = async (req, res) => {
         }
 
         const apis = await apisDao.findApisByIDs(apiIds);
-        res.status(200).json(users);
+        res.status(200).json(apis);
     } catch (error) {
         console.error("Error fetching multiple APIs by IDs:", error);
         res.status(500).json({ error: error.message });
