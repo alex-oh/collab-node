@@ -3,8 +3,8 @@ import * as apisDao from "./apis-dao.js";
 const ApiController = (app) => {
     app.post('/api/apis', createApi);
     app.get('/api/apis', findAllApis);
-    app.get('/api/apis/:aid', getApiByID);
     app.post('/api/apis/multiple', getMultipleApisByID);
+    app.get('/api/apis/:aid', getApiByID);
     app.put('/api/apis/:aid', updateApi);
 };
 
@@ -37,8 +37,8 @@ const getApiByID = async (req, res) => {
 
     try {
         const apiId = req.params.aid;
-        const api = await apisDao.findApiById(apiId);
-        
+        const api = await apisDao.findApiByID(apiId);
+
         if (!api) {
             return res.status(404).json({ error: 'API not found' });
         }
@@ -88,3 +88,4 @@ const updateApi = async (req, res) => {
 };
 
 
+export default ApiController;
