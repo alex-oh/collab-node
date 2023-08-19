@@ -6,6 +6,10 @@ export const findApiByID = (aid) => {
     return apisModel.findById(aid);
 }
 
+export const findApisByIDs = (aid) => {
+    return apisModel.findById({ _id: { $in: aid } })
+}
+
 export const createApi = (api) => {
     return apisModel.create(api);
 }
