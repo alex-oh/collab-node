@@ -8,6 +8,8 @@ const UsersController = (app) => {
     app.delete("/apis/users/:username", deleteUser);
     app.put("/api/users/:username", updateUser);
     app.put("/api/users/:username/description", updateUserDescription);
+    app.put("/api/user/:username/updateEmail", updateUserEmail);
+    app.put("/api/user/:username/updatePassword", updateUserPassword);
 
 };
 
@@ -76,16 +78,42 @@ const getMultipleUsersByID = async (req, res) => {
 };
 
 const updateUserDescription = async (req, res) => {
-  const username = req.params.username;
-  const {description} = req.body;
-
-  try {
-    const status = await userDao.updateUserDescription(username, description);
-    res.json(status);
-  } catch (error) {
-    console.error("Error updating user description:", error);
-    res.status(500).json({error: error.message});
+    const username = req.params.username;
+    const {description} = req.body;
+  
+    try {
+      const status = await userDao.updateUserDescription(username, description);
+      res.status(200).json({message: "bio-info Update successful"})
+    } catch (error) {
+      console.error("Error updating user description:", error);
+      res.status(500).json({error: error.message});
+    }
   }
-}
+  
+  const updateUserEmail = async (req, res) => {
+      const username = req.params.username;
+      const {email} = req.body;
+  
+      try {
+          const status = await userDao.updateUserEmail(username, email);
+          res.status(200).json({message: "email Update successful"})
+      } catch (error) {
+          console.error("Error updating user email:", error);
+          res.status(500).json({error: error.message});
+      }
+  }
+  
+  const updateUserPassword = async (req, res) => {
+      const username = req.params.username;
+      const {password} = req.body;
+  
+      try {
+          const status = await userDao.updateUserPassword(username, password);
+          res.status(200).json({message: "password Update successful"})
+      } catch (error) {
+          console.error("Error updating user password:", error);
+          res.status(500).json({error: error.message});
+      }
+  }
 
 export default UsersController;

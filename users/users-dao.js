@@ -42,5 +42,24 @@ export const updateUserDescription = async (username, description) => {
   } catch (e) {
     console.log("ERROR UPDATING: bio-info:", e);
   }
+};
+
+export const updateUserEmail = async (username, email) => {
+  try {
+    return await usersModel.updateOne({username}, {$set: {email}});
+  }
+  catch (e) {
+    console.log("ERROR UPDATING: email:", e);
+  }
 }
+
+export const updateUserPassword = async (username, password) => {
+  try {
+    return await usersModel.updateOne({username}, {$set: {password}});
+  }
+  catch (e) {
+    console.log("ERROR UPDATING: password:", e);
+  }
+}
+
 
