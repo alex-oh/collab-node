@@ -1,7 +1,8 @@
 import * as projectsDao from "./projects-dao.js";
 
 const ProjectsController = (app) => {
-    app.post('/api/createProjects', createProject);
+  // Fixed Create Project Call
+    app.post('/api/projects', createProject);
     app.get('/api/projects', getProjects);
     app.get('/api/projects/:projectId', getProjectById);
     // app.put('/api/projects/updateProjectId', updateProject);
@@ -12,6 +13,7 @@ const ProjectsController = (app) => {
  const createProject = async (req, res) => {
     try {
         const project = await projectsDao.create(req.body);
+        console.log(project);
         res.status(201).json(project);
     } catch (error) {
         res.status(500).json({ error: error.message });

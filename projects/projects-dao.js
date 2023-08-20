@@ -14,6 +14,7 @@ export const findOwnerId = (ownerId) => {
 
 export const create = async (projectData) => {
     const project = new projectsModel(projectData);
+    console.log(projectData);
     return await project.save();
 }
 
