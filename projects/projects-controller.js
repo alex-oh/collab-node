@@ -4,7 +4,7 @@ const ProjectsController = (app) => {
   // Fixed Create Project Call
     app.post('/api/projects', createProject);
     app.get('/api/projects', getProjects);
-    app.get('/api/projects/:projectId', getProjectById);
+    app.get('/api/projects/:projectId', findProjectById);
     // app.put('/api/projects/updateProjectId', updateProject);
     app.delete('/api/projects/projectId', deleteProject);
 
@@ -29,15 +29,6 @@ const ProjectsController = (app) => {
     }
 };
 
-const getProjectById = async (req, res) => {
-  try {
-    const project = await projectsDao.findById(req.params.projectId);
-    res.json(project);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-};
-
 const findCourseProject = async (req, res) => {
   try {
     const courseId = req.params.courseId;
@@ -50,7 +41,7 @@ const findCourseProject = async (req, res) => {
 
 const findProjectById = async (req, res) => {
   try {
-    const project = await findById(req.params.projectId);
+    const project = await projectsDao.findById(req.params.projectId);
     res.json(project);
   } catch (error) {
     res.status(500).json({ error: error.message });
