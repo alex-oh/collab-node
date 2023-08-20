@@ -4,6 +4,10 @@ export const findAll = () => {
     return projectsModel.find();
 }
 
+export const findById = (pid) => {
+    return projectsModel.findOne({_id: pid});
+}
+
 export const findOwnerId = (ownerId) => {
     return projectsModel.find({ projectOwner: ownerId });
 }

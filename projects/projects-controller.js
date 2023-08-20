@@ -3,6 +3,7 @@ import * as projectsDao from "./projects-dao.js";
 const ProjectsController = (app) => {
     app.post('/api/createProjects', createProject);
     app.get('/api/projects', getProjects);
+    app.get('/api/projects/:projectId', getProjectById);
     // app.put('/api/projects/updateProjectId', updateProject);
     app.delete('/api/projects/projectId', deleteProject);
 
@@ -27,10 +28,9 @@ const ProjectsController = (app) => {
     }
 };
 
-const findProject = async (req, res) => {
+const getProjectById = async (req, res) => {
   try {
-    const projectId = req.params.projectId;
-    const project = await ProjectsDAO.findAll(projectId);
+    const project = await projectsDao.findById(req.params.projectId);
     res.json(project);
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -47,28 +47,26 @@ const findCourseProject = async (req, res) => {
   }
 };
 
-
 const findProjectById = async (req, res) => {
   try {
-    const projectId = req.params.projectId;
-    const project = await findById(projectId);
+    const project = await findById(req.params.projectId);
     res.json(project);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 };
 
-const updateProject = async (req, res) => {
-  try {
-    const projectId = req.params.projectId;
-    const updatedProject = req.body;    
-    const result = await projectsDao.update(projectId, updatedProject);
-    res.json(result);
+// const updateProject = async (req, res) => {
+//   try {
+//     const projectId = req.params.projectId;
+//     const updatedProject = req.body;    
+//     const result = await projectsDao.update(projectId, updatedProject);
+//     res.json(result);
  
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-};
+//   } catch (error) {
+//     res.status(500).json({ error: error.message });
+//   }
+// };
 
 const deleteProject = async (req, res) => {
   try {
