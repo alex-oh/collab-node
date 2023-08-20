@@ -21,7 +21,6 @@ const ProjectsController = (app) => {
  const getProjects = async (req, res) => {
     try {
         const projects = await projectsDao.findAll();
-        console.log(projects);
         res.json(projects);
     } catch (error) {
         res.status(500).json({ error: error.message });
