@@ -6,6 +6,10 @@ export const findApiByID = (aid) => {
     return apisModel.findById(aid);
 }
 
+export const findApiByName = (name) => {
+    return apisModel.findOne({ title: name });
+}
+
 export const findApisByIDs = async (apiIds) => {
     try {
         return await apisModel.find({ _id: { $in: apiIds } });
