@@ -8,6 +8,7 @@ const UsersController = (app) => {
     app.delete("/apis/users/:username", deleteUser);
     app.put("/api/users/:username", updateUser);
     app.put("/api/users/:username/description", updateUserDescription);
+
 };
 
 const createUser = async (req, res) => {
@@ -65,6 +66,7 @@ const getMultipleUsersByID = async (req, res) => {
                 .json({ error: "Expected an array of user IDs" });
         }
 
+
         const users = await userDao.findUsersByIds(userIds);
         res.status(200).json(users);
     } catch (error) {
@@ -87,4 +89,3 @@ const updateUserDescription = async (req, res) => {
 }
 
 export default UsersController;
-
