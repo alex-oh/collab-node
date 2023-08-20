@@ -22,7 +22,9 @@ const userSchema = new mongoose.Schema({
 
     accountType: {type: String, required: true},
 
-    instructorCourses: {type: String, required: false}
+    instructorCourses: {type: String, required: false},
+
+    description: {type: String, required: false},
     
 }, {collection: "Users"});
 

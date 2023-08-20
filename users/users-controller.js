@@ -7,6 +7,8 @@ const UsersController = (app) => {
     app.post("/api/getMultipleUserById", getMultipleUsersByID);
     app.delete("/apis/users/:username", deleteUser);
     app.put("/api/users/:username", updateUser);
+    app.put("/api/users/:username/description", updateUserDescription);
+
 };
 
 const createUser = async (req, res) => {
@@ -64,6 +66,7 @@ const getMultipleUsersByID = async (req, res) => {
                 .json({ error: "Expected an array of user IDs" });
         }
 
+
         const users = await userDao.findUsersByIds(userIds);
         res.status(200).json(users);
     } catch (error) {
@@ -71,5 +74,18 @@ const getMultipleUsersByID = async (req, res) => {
         res.status(500).json({ error: error.message });
     }
 };
+
+const updateUserDescription = async (req, res) => {
+  const username = req.params.username;
+  const {description} = req.body;
+
+  try {
+    const status = await userDao.updateUserDescription(username, description);
+    res.json(status);
+  } catch (error) {
+    console.error("Error updating user description:", error);
+    res.status(500).json({error: error.message});
+  }
+}
 
 export default UsersController;

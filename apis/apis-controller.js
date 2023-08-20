@@ -6,6 +6,7 @@ const ApisController = (app) => {
     app.post('/api/apis/multiple', getMultipleApisByID);
     app.get('/api/apis/:aid', getApiByID);
     app.put('/api/apis/:aid', updateApi);
+    app.get('/api/apis/name/:name', getApiByName);
 };
 
 
@@ -85,6 +86,24 @@ const updateApi = async (req, res) => {
         console.error("Error updating API:", error);
         res.status(500).json({ error: error.message });
     }
+};
+
+const getApiByName = async (req, res) => {
+
+    try {
+        const name = req.params.name;
+        const api = await apisDao.findApiByName(name);
+
+        if (!api) {
+            return res.status(404).json({ error: 'API not found' });
+        }
+
+        res.status(200).json(api);
+    } catch (error) {
+        console.error("Error fetching API by URL:", error);
+        res.status(500).json({ error: error.message });
+    }
+
 };
 
 

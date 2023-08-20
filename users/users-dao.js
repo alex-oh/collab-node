@@ -36,4 +36,11 @@ export const deleteUser = async (uid) => {
   return { status: 'ok' }
 };
 
+export const updateUserDescription = async (username, description) => {
+  try {
+    return await usersModel.updateOne({username}, {$set: {description}});
+  } catch (e) {
+    console.log("ERROR UPDATING: bio-info:", e);
+  }
+}
 
