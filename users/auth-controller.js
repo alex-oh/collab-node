@@ -4,14 +4,14 @@ import bcrypt from "bcryptjs";
 import usersModel from "./users-model.js";
 
 const AuthController = (app) => {
-  app.post("/api/register", registerUser);
-  app.post("/api/login", loginUser);
-  app.post("/api/logout", logoutUser);
-  app.get("/api/profile", profile);
-  app.put("/api/update", update);
+  app.post("/api/users/register", register);
+  app.post("/api/users/login", login);
+  app.post("/api/users/logout", logout);
+//   app.get("/api/users/profile", profile);
+//   app.put("/api/users/update", update);
 };
 
-const registerUser = async (req, res) => {
+const register = async (req, res) => {
   try {
     const { username, password, email } = req.body;
 
@@ -21,22 +21,16 @@ const registerUser = async (req, res) => {
       return res.status(400).json({ error: "Username already exists" });
     }
 
-    const newUser = {
-      username,
-      password,
-      email,
-      accountType: "user",
-    };
-
-    await userDao.createUser(newUser);
-    res.status(201).json({ message: "User registered successfully" });
+    const newUser = await userDao.createUser({...req.body, "accountType": "user"});
+    console.log(newUser);
+    res.status(201).json(newUser);
   } catch (error) {
     console.error("Error registering user:", error);
     res.status(500).json({ error: "Internal Server Error" });
   }
 };
 
-const loginUser = async (req, res) => {
+const login = async (req, res) => {
   try {
     const { username, password } = req.body;
 
@@ -69,7 +63,7 @@ const loginUser = async (req, res) => {
   }
 };
 
-const logoutUser = (req, res) => {
+const logout = (req, res) => {
   // log out user session
   req.session.destroy();
   res.status(200).json({ message: "Logout successful" });

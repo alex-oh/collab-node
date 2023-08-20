@@ -19,9 +19,7 @@ export const findUserByCredentials = (usernameToCheck, passwordToCheck) => {
 };
 
 export const createUser = async (user) => {
-  console.log("Testing Create User");
-  console.log(user);
-  return  await usersModel.create(user);
+  return await usersModel.create(user);
 };
 
 export const updateUser = async (uid, user) => {
@@ -38,4 +36,11 @@ export const deleteUser = async (uid) => {
   return { status: 'ok' }
 };
 
+export const updateUserDescription = async (username, description) => {
+  try {
+    return await usersModel.updateOne({username}, {$set: {description}});
+  } catch (e) {
+    console.log("ERROR UPDATING: bio-info:", e);
+  }
+}
 
