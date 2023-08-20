@@ -18,10 +18,10 @@ export const findUserByCredentials = (usernameToCheck, passwordToCheck) => {
   return usersModel.findOne({ username: usernameToCheck, password: passwordToCheck })
 };
 
-export const createUser = (user) => {
+export const createUser = async (user) => {
   console.log("Testing Create User");
   console.log(user);
-  return usersModel.create(user);
+  return  await usersModel.create(user);
 };
 
 export const updateUser = async (uid, user) => {
@@ -33,8 +33,9 @@ export const updateUser = async (uid, user) => {
   }
 };
 
-export const deleteUser = (uid) => {
-  usersModel.deleteOne({ _id: uid });
+export const deleteUser = async (uid) => {
+  await usersModel.deleteOne({ username: uid });
   return { status: 'ok' }
 };
+
 

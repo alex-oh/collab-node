@@ -1,12 +1,12 @@
 import * as userDao from "./users-dao.js";
 
 const UsersController = (app) => {
-  app.post('/api/users', createUser);
-  app.get('/api/users', findAllUsers);
-  app.get('/api/users/:uid', getUserById);
-  app.post('/api/users/multiple', getMultipleUsersByID);
-  app.delete('/api/users/:uid', deleteUser);
-  app.put('/api/users/:uid', updateUser);
+  app.post('/api/createUser', createUser);
+  app.get('/api/findAllUsers', findAllUsers);
+  app.get('/api/findUserById:uid', getUserById);
+  app.post('/api/getMultipleUserById', getMultipleUsersByID);
+  app.delete('/apis/delete/:username', deleteUser);
+  app.put('/api/updateUser/:username', updateUser);
 };
 
 const createUser = async (req, res) => {
@@ -20,14 +20,16 @@ const createUser = async (req, res) => {
 };
 
 const updateUser = async (req, res) => {
-    const uid = req.params.uid;
-   
-    const updateUser = await userDao.updateUser(uid);
-    res.status(200).json(updateUser);
+    const uid = req.params.username;
+
+    const status = await userDao.updateUser(uid, req.body);
+    const user = await userDao.findUserByUsername(uid);
+    res.session.user = user;
+    res.json(status);
 };
 
 const deleteUser = async (req, res) => {
-    const uid = req.params.uid;
+    const uid = req.params.username;
     const status = await userDao.deleteUser(uid);
     res.json(status);
 };
@@ -71,3 +73,4 @@ const getMultipleUsersByID = async (req, res) => {
 
 
 export default UsersController;
+

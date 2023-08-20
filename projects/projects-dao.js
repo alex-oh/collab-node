@@ -17,7 +17,9 @@ export const update = async (pid, project) => {
 
     try {
         const result = await projectsModel.updateOne({_id: pid}, {$set: project});
-        return user;
+        console.log('hello');
+        console.log(result);
+        return project;
     } catch (e) {
         console.log("ERROR UPDATED PROJECT:", e);
     }

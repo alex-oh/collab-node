@@ -1,10 +1,11 @@
 import * as projectsDao from "./projects-dao.js";
 
 const ProjectsController = (app) => {
-    app.post('/api/projects', createProject);
+    app.post('/api/createProjects', createProject);
     app.get('/api/projects', getProjects);
-    app.put('/api/projects/projectId', updateProject);
+    // app.put('/api/projects/updateProjectId', updateProject);
     app.delete('/api/projects/projectId', deleteProject);
+
 };
 
  const createProject = async (req, res) => {
@@ -60,9 +61,10 @@ const findProjectById = async (req, res) => {
 const updateProject = async (req, res) => {
   try {
     const projectId = req.params.projectId;
-    const updatedProject = req.body;
-    const result = await update(projectId, updatedProject);
+    const updatedProject = req.body;    
+    const result = await projectsDao.update(projectId, updatedProject);
     res.json(result);
+ 
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
