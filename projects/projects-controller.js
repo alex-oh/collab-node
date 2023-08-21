@@ -4,8 +4,9 @@ const ProjectsController = (app) => {
     // Fixed Create Project Call
     app.post("/api/projects", createProject);
     app.get("/api/projects", getProjects);
-    app.get("/api/myProjects", getMyProjects);
+    app.get("/api/my-projects/:uid", getMyProjects);
     app.get("/api/projects/:projectId", findProjectById);
+    app.get("/api/course-projects/:courseId", findProjectByCourse)
     // app.put('/api/projects/updateProjectId', updateProject);
     app.delete("/api/projects/projectId", deleteProject);
 };
@@ -31,27 +32,29 @@ const getProjects = async (req, res) => {
 
 const getMyProjects = async (req, res) => {
     try {
-        const projects = await projectsDao.findOwnerId(req.body.user._id);
+        const projects = await projectsDao.findOwnerId(req.params.uid);
         res.json(projects);
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
 };
 
-const findCourseProject = async (req, res) => {
+const findProjectByCourse = async (req, res) => {
     try {
         const courseId = req.params.courseId;
-        const project = await findOwnerId(courseId);
-        res.json(project);
+        const projects = await projectsDao.findByCourseId(courseId);
+        console.log(projects);
+        res.json(projects);
     } catch (error) {
-        res.status(500).json({ error: error.message });
+        // res.status(500).json({ error: error.message });
+        res.json(null);
     }
 };
 
 const findProjectById = async (req, res) => {
     try {
         const project = await projectsDao.findById(req.params.projectId);
-        res.json(project);
+        console.log("controller");
     } catch (error) {
         res.status(500).json({ error: error.message });
     }

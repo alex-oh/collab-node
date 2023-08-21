@@ -12,6 +12,10 @@ export const findOwnerId = (ownerId) => {
     return projectsModel.find({ projectOwner: ownerId });
 }
 
+export const findByCourseId = (courseId) => {
+    return projectsModel.find({classNumber: courseId});
+}
+
 export const create = async (projectData) => {
     const project = new projectsModel(projectData);
     console.log(projectData);
