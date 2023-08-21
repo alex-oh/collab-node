@@ -13,7 +13,8 @@ const AuthController = (app) => {
 
 const register = async (req, res) => {
   try {
-    const { username, password, email } = req.body;
+    console.log(req.body);
+    const { username, password, email,  } = req.body;
 
     // Check if user already exists
     const existingUser = await userDao.findUserByUsername(username);
@@ -21,7 +22,7 @@ const register = async (req, res) => {
       return res.status(400).json({ error: "Username already exists" });
     }
 
-    const newUser = await userDao.createUser({...req.body, "accountType": "user"});
+    const newUser = await userDao.createUser({...req.body});
     console.log(newUser);
     res.status(201).json(newUser);
   } catch (error) {
