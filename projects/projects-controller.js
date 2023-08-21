@@ -54,7 +54,7 @@ const findProjectByCourse = async (req, res) => {
 const findProjectById = async (req, res) => {
     try {
         const project = await projectsDao.findById(req.params.projectId);
-        console.log("controller");
+        res.json(project);
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
