@@ -6,7 +6,7 @@ const UsersController = (app) => {
     app.get("/api/users/:uid", getUserById);
     app.post("/api/getMultipleUserById", getMultipleUsersByID);
     app.delete("/apis/users/:username", deleteUser);
-    app.put("/api/users/:username", updateUser);
+    app.put("/api/users/:uid", updateUser);
     app.put("/api/users/:username/description", updateUserDescription);
     app.put("/api/user/:username/updateEmail", updateUserEmail);
     app.put("/api/user/:username/updatePassword", updateUserPassword);
@@ -24,12 +24,11 @@ const createUser = async (req, res) => {
 };
 
 const updateUser = async (req, res) => {
-    const uid = req.params.username;
+    const uid = req.params.uid;
 
-    const status = await userDao.updateUser(uid, req.body);
-    const user = await userDao.findUserByUsername(uid);
-    res.session.user = user;
-    res.json(status);
+    const updatedUser = await userDao.updateUser(uid, req.body);
+    console.log(updatedUser);
+    res.json(updatedUser);
 };
 
 const deleteUser = async (req, res) => {
