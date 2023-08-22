@@ -7,7 +7,7 @@ const ProjectsController = (app) => {
     app.get("/api/projects/:projectId", findProjectById);
     app.get("/api/course-projects/:courseId", findProjectByCourse)
     // app.put('/api/projects/updateProjectId', updateProject);
-    app.delete("/api/projects/projectId", deleteProject);
+    app.delete("/api/projects/:projectId", deleteProject);
 };
 
 const createProject = async (req, res) => {
@@ -77,7 +77,7 @@ const findProjectById = async (req, res) => {
 const deleteProject = async (req, res) => {
     try {
         const projectId = req.params.projectId;
-        const result = await deleteById(projectId);
+        const result = await projectsDao.deleteById(projectId);
         res.json(result);
     } catch (error) {
         res.status(500).json({ error: error.message });

@@ -26,7 +26,6 @@ export const update = async (pid, project) => {
 
     try {
         const result = await projectsModel.updateOne({_id: pid}, {$set: project});
-        console.log('hello');
         console.log(result);
         return project;
     } catch (e) {
@@ -35,6 +34,7 @@ export const update = async (pid, project) => {
 }
 
 export const deleteById = async (id) => {
-    projectsModel.deleteOne({_id});
-    return {status: 'ok'};
+    const result = await projectsModel.deleteOne({_id: id});
+    console.log(result);
+    return id;
 }

@@ -6,6 +6,8 @@ const projectsSchema = new mongoose.Schema({
 
     description: {type: String, required: false},
 
+    seekingMembers: {type: String},
+
     type: {type: String, required: true},
 
     completionPercentage: {
