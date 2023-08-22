@@ -1,4 +1,5 @@
 import * as projectsDao from "./projects-dao.js";
+
 const ProjectsController = (app) => {
     // Fixed Create Project Call
     app.post("/api/projects", createProject);
@@ -31,10 +32,10 @@ const getProjects = async (req, res) => {
 
 const getMyProjects = async (req, res) => {
     try {
-        const{uid} = req.body;
-        console.log("Request body from project-controllers:", req.body);
+        const userId = req.params.uid;
         console.log("Request parameters from project-controllers:", req.params);
         const projects = await projectsDao.findOwnerId(req.params.uid);
+        console.log("Projects from project-controllers:", projects.result);
         res.json(projects);
     } catch (error) {
         res.status(500).json({ error: error.message });

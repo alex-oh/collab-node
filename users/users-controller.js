@@ -50,7 +50,7 @@ const findAllUsers = async (req, res) => {
 const getUserById = async (req, res) => {
     try {
         const userId = req.params.uid;
-        console.log("from controller",userId);
+        console.log("from controller use-contrroller",userId);
         const user = await userDao.findUserById(userId);
         res.status(200).json(user);
     } catch (error) {
