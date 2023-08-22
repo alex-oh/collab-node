@@ -8,6 +8,7 @@ const UsersController = (app) => {
     app.delete("/apis/users/:username", deleteUser);
     app.put("/api/users/:uid", updateUser);
     app.put("/api/users/:username/description", updateUserDescription);
+    app.put("/api/users/:uid/favorite", addFavoriteApiToUser);  // <-- Added this line
 
 };
 
@@ -85,6 +86,27 @@ const updateUserDescription = async (req, res) => {
     console.error("Error updating user description:", error);
     res.status(500).json({error: error.message});
   }
-}
+};
+
+const addFavoriteApiToUser = async (req, res) => {
+    const userId = req.params.uid;
+    const apiId = req.body.apiId;
+
+    if (!apiId) {
+        return res.status(400).json({ error: "API ID is required in the request body." });
+    }
+
+    try {
+        const response = await userDao.updateUserWithFavoritesAPI(userId, apiId);
+        if (response.status === 'ok') {
+            res.status(200).json({ message: "Successfully added the API to favorites" });
+        } else {
+            throw new Error(response.message);
+        }
+    } catch (error) {
+        console.error("Error adding favorite API to user:", error);
+        res.status(500).json({ error: error.message });
+    }
+};
 
 export default UsersController;

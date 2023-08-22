@@ -9,6 +9,7 @@ import AuthController from "./users/auth-controller.js";
 
 const CONNECTION_STRING =
     "mongodb+srv://krugert:ZIFQQxbMj7zC7Pmp@neu-collab-0.1oel9h6.mongodb.net/";
+    
 const FRONTEND_URL = "http://localhost:3000";
 const NODE_ENV = "development";
 
@@ -28,6 +29,7 @@ const sessionOptions = {
     resave: false,
     saveUninitialized: false,
 };
+
 if (NODE_ENV !== "development") {
     sessionOptions.proxy = true;
     sessionOptions.cookie = {

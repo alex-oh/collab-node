@@ -7,6 +7,8 @@ const ApisController = (app) => {
     app.get('/api/apis/:aid', getApiByID);
     app.put('/api/apis/:aid', updateApi);
     app.get('/api/apis/name/:name', getApiByName);
+    app.put('/api/apis/favorites/:aid', updateApiUserFavorites);
+    // http://localhost:4000/api/apis/name
 };
 
 
@@ -52,7 +54,6 @@ const getApiByID = async (req, res) => {
 
 };
 
-
 const getMultipleApisByID = async (req, res) => {
 
     try {
@@ -91,7 +92,9 @@ const updateApi = async (req, res) => {
 const getApiByName = async (req, res) => {
 
     try {
-        const name = req.params.name;
+        let name = req.params.name;
+        name = name.replace(/-/g, ' ');
+
         const api = await apisDao.findApiByName(name);
 
         if (!api) {
@@ -105,6 +108,24 @@ const getApiByName = async (req, res) => {
     }
 
 };
+
+const updateApiUserFavorites = async (req, res) => {
+    try {
+        const apiId = req.params.aid;  // Extract apiId from the request parameters
+        const userId = req.body.userId; // Extract userId from the request body
+
+        const updatedApi = await apisDao.addUserToApiFavorites(apiId, userId);
+        if (!updatedApi) {
+            return res.status(404).json({ error: 'API not found' });
+        }
+        res.status(200).json(updatedApi);
+    } catch (error) {
+        console.error("Database error:", error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+};
+
+
 
 
 export default ApisController;
