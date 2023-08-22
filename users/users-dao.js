@@ -44,22 +44,22 @@ export const updateUserDescription = async (username, description) => {
   }
 };
 
-export const updateUserEmail = async (username, email) => {
-  try {
-    return await usersModel.updateOne({username}, {$set: {email}});
-  }
-  catch (e) {
-    console.log("ERROR UPDATING: email:", e);
-  }
-}
+export const updateUserWithFavoritesAPI = async (userId, apiId) => { 
 
-export const updateUserPassword = async (username, password) => {
-  try {
-    return await usersModel.updateOne({username}, {$set: {password}});
-  }
-  catch (e) {
-    console.log("ERROR UPDATING: password:", e);
-  }
-}
+  console.log(apiId);
 
+  try {
+      const result = await usersModel.updateOne(
+        
+          { _id: userId }, 
+          { $push: { favoriteApis: apiId } }
+          
+      );
+      return { status: 'ok' };
+  } catch (e) {
+      console.log("ERROR UPDATING USER'S FAVORITE APIs:", e);
+      return { status: 'error', message: e.message };
+  }
+  
+};
 

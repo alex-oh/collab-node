@@ -8,8 +8,7 @@ const UsersController = (app) => {
     app.delete("/apis/users/:username", deleteUser);
     app.put("/api/users/:uid", updateUser);
     app.put("/api/users/:username/description", updateUserDescription);
-    app.put("/api/user/:username/updateEmail", updateUserEmail);
-    app.put("/api/user/:username/updatePassword", updateUserPassword);
+    app.put("/api/users/:uid/favorite", addFavoriteApiToUser);  // <-- Added this line
 
 };
 
@@ -50,7 +49,6 @@ const findAllUsers = async (req, res) => {
 const getUserById = async (req, res) => {
     try {
         const userId = req.params.uid;
-        console.log("from controller use-contrroller",userId);
         const user = await userDao.findUserById(userId);
         res.status(200).json(user);
     } catch (error) {
@@ -78,43 +76,37 @@ const getMultipleUsersByID = async (req, res) => {
 };
 
 const updateUserDescription = async (req, res) => {
-    const username = req.params.username;
-    const {description} = req.body;
-  
-    try {
-      const status = await userDao.updateUserDescription(username, description);
-      res.status(200).json({message: "bio-info Update successful"})
-    } catch (error) {
-      console.error("Error updating user description:", error);
-      res.status(500).json({error: error.message});
-    }
-  }
-  
-  const updateUserEmail = async (req, res) => {
-      const username = req.params.username;
-      const {email} = req.body;
-  
-      try {
-          const status = await userDao.updateUserEmail(username, email);
-          res.status(200).json({message: "email Update successful"})
-      } catch (error) {
-          console.error("Error updating user email:", error);
-          res.status(500).json({error: error.message});
-      }
-  }
-  
-  const updateUserPassword = async (req, res) => {
-      const username = req.params.username;
-      const {password} = req.body;
-  
-      try {
-          const status = await userDao.updateUserPassword(username, password);
-          res.status(200).json({message: "password Update successful"})
-      } catch (error) {
-          console.error("Error updating user password:", error);
-          res.status(500).json({error: error.message});
-      }
-  }
+  const username = req.params.username;
+  const {description} = req.body;
 
-  
+  try {
+    const status = await userDao.updateUserDescription(username, description);
+    res.json(status);
+  } catch (error) {
+    console.error("Error updating user description:", error);
+    res.status(500).json({error: error.message});
+  }
+};
+
+const addFavoriteApiToUser = async (req, res) => {
+    const userId = req.params.uid;
+    const apiId = req.body.apiId;
+
+    if (!apiId) {
+        return res.status(400).json({ error: "API ID is required in the request body." });
+    }
+
+    try {
+        const response = await userDao.updateUserWithFavoritesAPI(userId, apiId);
+        if (response.status === 'ok') {
+            res.status(200).json({ message: "Successfully added the API to favorites" });
+        } else {
+            throw new Error(response.message);
+        }
+    } catch (error) {
+        console.error("Error adding favorite API to user:", error);
+        res.status(500).json({ error: error.message });
+    }
+};
+
 export default UsersController;
