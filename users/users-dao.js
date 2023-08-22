@@ -42,5 +42,25 @@ export const updateUserDescription = async (username, description) => {
   } catch (e) {
     console.log("ERROR UPDATING: bio-info:", e);
   }
-}
+};
+
+export const updateUserWithFavoritesAPI = async (userId, apiId) => { 
+
+  console.log(apiId);
+
+  try {
+      const result = await usersModel.updateOne(
+        
+          { _id: userId }, 
+          { $push: { favoriteApis: apiId } }
+          
+      );
+      return { status: 'ok' };
+  } catch (e) {
+      console.log("ERROR UPDATING USER'S FAVORITE APIs:", e);
+      return { status: 'error', message: e.message };
+  }
+  
+};
+
 
