@@ -24,7 +24,8 @@ const projectsSchema = new mongoose.Schema({
     projectOwner: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Users',  // Assuming your user model is named 'User'
-        required: true
+        required: false,
+        default: null
     },
 
     classNumber: {type: String, required: false}

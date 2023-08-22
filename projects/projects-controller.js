@@ -32,7 +32,10 @@ const getProjects = async (req, res) => {
 
 const getMyProjects = async (req, res) => {
     try {
+        const userId = req.params.uid;
+        console.log("Request parameters from project-controllers:", req.params);
         const projects = await projectsDao.findOwnerId(req.params.uid);
+        console.log("Projects from project-controllers:", projects.result);
         res.json(projects);
     } catch (error) {
         res.status(500).json({ error: error.message });
