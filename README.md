@@ -1,6 +1,12 @@
+## Description
 This is an Express server that connects Collab's [React frontend](https://github.com/alex-oh/collab-react) to a MongoDB database.
 
-Hosted on [Render](https://neu-collab.onrender.com).
+Built by:
+- Thomas Kruger
+- Alex Oh
+- Frank Li
+
+Hosted on [Render](https://neu-collab.onrender.com)
 ## Run Locally:
 1. Install npm
 2. Run `npm install`
