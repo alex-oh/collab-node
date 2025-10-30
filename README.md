@@ -6,7 +6,7 @@ Built by:
 - Alex Oh
 - Frank Li
 
-Hosted on [Render](https://neu-collab.onrender.com)
+Hosted on [Render](https://neu-collab.onrender.com) (disabled 10/29/25)
 ## Run Locally:
 1. Install npm
 2. Run `npm install`
